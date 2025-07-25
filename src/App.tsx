@@ -51,7 +51,7 @@ function SearchPage() {
     <div className="App-content">
       <h2>Search Results for: "{term}"</h2>
       {/* You can add actual search results here */}
-      <button onClick={() => navigate('/')}>Back to Home test</button>
+      <button onClick={() => navigate('/')}>Back to Home</button>
     </div>
   );
 }
