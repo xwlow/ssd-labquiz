@@ -3,17 +3,12 @@ import './App.css';
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import ReactContext, { createContext, useContext } from 'react';
+import {validateInput} from './validateInput'; // Import the validateInput function for testing
 
 // Context for search term
 const SearchTermContext = createContext<{term: string, setTerm: (t: string) => void}>({term: "", setTerm: () => {}});
 
-function validateInput(input: string) {
-  // Simple XSS check
-  const xssPattern = /<script|on\w+=|javascript:|<img|<iframe|<svg|<object|<embed|<link|<style|<body|<input|<form|<a\s+href|<video|<audio|<marquee|<meta|<base|<applet|<bgsound|<frame|<frameset|<ilayer|<layer|<xml|<blink|<isindex|<textarea|<button|<select|<option|<div|<span|<table|<td|<th|<tr|<ul|<li|<ol|<dl|<dt|<dd|<fieldset|<legend|<label|<script|<noscript|<title|<head|<html|<!--|<\?|\?>|<%|%>|<\w+\s+[^>]*on\w+=/i;
-  // Simple SQL injection check
-  const sqlPattern = /(\b(select|insert|update|delete|drop|alter|create|truncate|exec|union|where|from|having|group by|order by|--|;|\*|\')\b|\b(or|and)\b\s+\d+=\d+)/i;
-  return xssPattern.test(input) || sqlPattern.test(input);
-}
+
 
 function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
