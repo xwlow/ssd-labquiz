@@ -26,9 +26,12 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install
 
+      - name: Build React app
+        run: npm run build
+
       - name: Prepare artifacts
         run: |
-          tar -czvf www-build.tar.gz ./package.json ./src/server.js tests
+          tar -czvf www-build.tar.gz ./build ./package.json ./src/SeleniumTest.mjs
           ls -l
 
       - name: Upload artifacts
@@ -102,5 +105,13 @@ jobs:
             curl -s $SELENIUM_HOST && break || sleep 3
           done
 
+      - name: Install static server
+        run: npm install -g serve
+
+      - name: Start static server
+        run: |
+          nohup serve -s build -l 3000 &
+          sleep 5
+
       - name: Run Selenium tests
-        run: node tests/SeleniumTest.mjs github
+        run: node src/SeleniumTest.mjs github
